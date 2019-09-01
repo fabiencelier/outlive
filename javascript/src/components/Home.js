@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {  Avatar, List, } from 'antd';
+import {  Avatar, List, Tag } from 'antd';
 import {getAllDatabase} from '../api/query';
 import { addTabs } from './Tabular';
 import { diffWithTodayInDays } from '../date/date';
@@ -29,9 +29,16 @@ class HomeContent extends Component{
           renderItem={item => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Avatar src={item.image} />}
+                avatar={<Avatar size={64} src={item.image} />}
                 title={<a href={item.link}>{item.title}</a>}
-                description={`${item.days} days`}
+                description={
+                  <div>
+                    <div>{item.days} days</div>
+                    <div>
+                      {item.categories.map(cat => <Tag color="purple">{cat}</Tag> )}
+                    </div>
+                  </div>
+                }
               />
             </List.Item>
           )}

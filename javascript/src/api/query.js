@@ -24,7 +24,7 @@ const url=`https://sheets.googleapis.com/v4/spreadsheets/${request.spreadsheetId
 
 const cleanData = data => {
   data.splice(0,1)
-  return data.map(row => parseResult(row))
+  return data.map(row => parseResult(row)).sort((a,b) => a.days - b.days)
 }
 
 export const getAllDatabase = async () => {
