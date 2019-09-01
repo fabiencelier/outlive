@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "javascript/package.json" }}
+            - v1-dependencies-
+
+      - run: cd javascript && yarn install
+
+      - save_cache:
+          paths:
+            - javascript/node_modules
+          key: v1-dependencies-{{ checksum "javascript/package.json" }}
+      - run: cd javascript && yarn test
+      - run: cd javascript && yarn build
