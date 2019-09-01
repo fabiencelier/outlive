@@ -5,10 +5,19 @@ const request = {
 };
 
 const parseResult = (row) => ({
+  id: row[0],
+  days: row[1],
+  birthDate: new Date(row[2]),
+  deathDate: new Date(row[3]),
+  firstName: row[4],
+  lastName: row[5],
   title: row[6],
+  description: row[7],
   image: row[8],
   link: row[9],
-  days: row[1],
+  categories: row[10].split(","),
+  exactDates: row[11] === "TRUE",
+  nationality: row[12].split(",")
 })
 
 const url=`https://sheets.googleapis.com/v4/spreadsheets/${request.spreadsheetId}/values/${request.range}?key=${request.key}`
