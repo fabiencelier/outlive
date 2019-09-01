@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build-and-deploy:
     docker:
       - image: circleci/node
 
@@ -32,8 +32,15 @@ jobs:
             git config credential.helper 'cache --timeout=120'
             git config user.email "$EMAIL"
             git config user.name "$USERNAME"
-            git commit --allow-empty -m "Deploy version $CIRCLE_SHA1 from CI"
+            git commit --allow-empty -m "[OUTLIVE] Deploy $CIRCLE_SHA1 from CI"
             # Push quietly to prevent showing the token in log
             git push -q https://${GITHUB_TOKEN}@github.com/fabiencelier/fabiencelier.github.io.git master
-      # TODO add filter on master
 
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build-and-deploy:
+          filters:
+            branches:
+              only: master
