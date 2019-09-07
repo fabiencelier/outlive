@@ -2,22 +2,27 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
 
+const Tab = (props) => (
+  <div>
+    <Link
+      className="Header-link"
+      to={props.path}
+      style={{color: props.active ? "white" : "grey"}}
+    >
+        <Icon type={props.icon} /> {props.text}
+    </Link>
+  </div>
+)
 
-export const addTabs = (WrappedComponent) => {
+export const addTabs = (WrappedComponent, active) => {
   return () => (
     <div className="App">
       <div className="App-header">
         <div style={{zIndex: 10}}  className="flex-container">
-          <div>
-            <Link className="Header-link" to="/"><Icon type="home" /> Home</Link>
+          <Tab path="/" icon="home" text="Home" active={active==="home"}/>
+          <Tab path="/statistics" icon="bar-chart" text="Statistics" active={active==="statistics"}/>
+          <Tab path="/settings" icon="setting" text="Settings" active={active==="settings"}/>
           </div>
-          <div>
-            <Link className="Header-link" to="/statistics"><Icon type="bar-chart" /> Statistics</Link>
-          </div>
-          <div>
-            <Link className="Header-link" to="/settings"><Icon type="setting" /> Settings</Link>
-          </div>
-        </div>
         <WrappedComponent />
       </div>
     </div>

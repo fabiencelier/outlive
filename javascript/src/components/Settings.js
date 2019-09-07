@@ -66,4 +66,4 @@ const SettingsContent = (props) => (
   </div>
 )
 
-export const Settings = addTabs(SettingsContent);
+export const Settings = addTabs(SettingsContent, "settings");

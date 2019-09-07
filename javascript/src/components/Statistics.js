@@ -14,4 +14,4 @@ const StatisticsContent = (props) => (
   </div>
 )
 
-export const Statistics = addTabs(StatisticsContent);
+export const Statistics = addTabs(StatisticsContent, "statistics");

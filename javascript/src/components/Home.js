@@ -66,4 +66,4 @@ class HomeContent extends Component{
   }
 }
 
-export const Home = addTabs(HomeContent);
+export const Home = addTabs(HomeContent, "home");
