@@ -3,7 +3,18 @@ export const setBirthDate = (date) => ({
   date,
 });
 
-export const setCategories = (categories) => ({
-  type: 'SET_CATEGORIES',
-  categories,
+export const addCatagory = (category) => ({
+  type: 'ADD_CATEGORY',
+  category,
+});
+
+export const removeCatagory = (category) => ({
+  type: 'REMOVE_CATEGORY',
+  category,
+});
+
+
+export const setNotifPreferences = (pref) => ({
+  type: 'SET_NOTIF_PREF',
+  pref,
 });

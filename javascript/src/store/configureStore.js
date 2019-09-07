@@ -1,12 +1,16 @@
 import { createStore, combineReducers } from 'redux';
-import databaseReducer from '../reducers/database';
-import userReducer from '../reducers/user';
+import databaseReducer, {defaultDatabaseState} from '../reducers/database';
+import userReducer, {defaultUserState} from '../reducers/user';
 
+const getDefaultState = () => ({
+  user: defaultUserState,
+  database: defaultDatabaseState,
+})
 
 const getPersistedState = () => {
   const persistedState = localStorage.getItem('reduxState') 
       ? JSON.parse(localStorage.getItem('reduxState'))
-      : {}
+      : getDefaultState()
   if (persistedState.database){
     persistedState.database = persistedState.database.map( obj => ({
       ...obj,

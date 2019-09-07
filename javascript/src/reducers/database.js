@@ -1,4 +1,4 @@
-const defaultDatabaseState = []
+export const defaultDatabaseState = []
 
 export default (state = defaultDatabaseState, action) => {
   switch (action.type) {

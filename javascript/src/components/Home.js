@@ -44,13 +44,12 @@ class HomeContent extends Component{
 
   render() {
     return (
-      <div>
-        <List
-          itemLayout="horizontal"
-          dataSource={this.props.database}
-          renderItem={item => <ListItem {...item}/>}
-        />
-      </div>
+      <List
+        itemLayout="horizontal"
+        dataSource={this.props.database}
+        renderItem={item => <ListItem {...item}/>}
+        style={{paddingTop: "100px"}}
+      />
     )
   }
 }

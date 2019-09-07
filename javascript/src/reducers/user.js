@@ -1,6 +1,7 @@
-const defaultUserState = {
-  notifPref: ["Famous"],
+export const defaultUserState = {
+  categories: ["Famous"],
   birth: new Date("1993-10-12"),
+  notifPref: "never"
 }
 
 export default (state = defaultUserState, action) => {
@@ -10,10 +11,15 @@ export default (state = defaultUserState, action) => {
         ...state,
         birth: action.date,
       };
-    case 'SET_CATEGORIES':
+    case 'ADD_CATEGORY':
       return {
         ...state,
-        categories: action.categories
+        categories: [ ...state.categories, action.category]
+      }
+    case 'REMOVE_CATEGORY':
+      return {
+        ...state,
+        categories: state.categories.filter(cat => cat === action.ategory)
       }
     case 'SET_NOTIF_PREF': 
       return {
