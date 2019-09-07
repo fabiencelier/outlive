@@ -1,28 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Statistic } from 'antd';
 import { addTabs } from './Tabular';
 import { diffWithTodayInDays } from '../date/date';
+import {connect} from 'react-redux';
 
-class StatisticsContent extends Component {
+const StatisticsContent = (props) => (
+  <div>
+    <h1 style={{color: "white"}}>Statistics</h1>
+    <h3 style={{color: "white"}}>Survival Time</h3>
+    <Statistic title="Days" value={props.age} />
+    <Statistic title="Hours" value={props.age*24} />
+    <Statistic title="Minutes" value={props.age*24*60} />
+    <Statistic title="Seconds" value={props.age*24*60*60} />
+  </div>
+)
 
-  constructor(props) {
-    super(props);
-    // Don't call this.setState() here!
-    this.state = { age : diffWithTodayInDays(new Date("1993-10-12")) };
-  }
+const mapStateToProps = (state) => ({
+  age : diffWithTodayInDays(state.user.birth)
+});
 
-  render() {
-    return (
-      <div>
-        <h1 style={{color: "white"}}>Statistics</h1>
-        <h3 style={{color: "white"}}>Survival Time</h3>
-        <Statistic title="Days" value={this.state.age} />
-        <Statistic title="Hours" value={this.state.age*24} />
-        <Statistic title="Minutes" value={this.state.age*24*60} />
-        <Statistic title="Seconds" value={this.state.age*24*60*60} />
-      </div>
-    )
-  }
-}
-
-export const Statistics = addTabs(StatisticsContent, "statistics");
+export const Statistics = addTabs(connect(mapStateToProps)(StatisticsContent), "statistics");
