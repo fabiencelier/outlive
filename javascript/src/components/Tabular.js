@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
+import { Mobile, Desktop } from '../responsive/Responsive';
 
 const Tab = (props) => (
   <div>
@@ -9,7 +10,7 @@ const Tab = (props) => (
       to={props.path}
       style={{color: props.active ? "white" : "grey"}}
     >
-        <Icon type={props.icon} /> {props.text}
+        <Icon type={props.icon} /> <Desktop>{props.text}</Desktop>
     </Link>
   </div>
 )
