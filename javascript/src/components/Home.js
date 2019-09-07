@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
-import {  Avatar, List, Tag } from 'antd';
+import { Avatar, List, Tag } from 'antd';
 import {getAllDatabase} from '../api/query';
 import { addTabs } from './Tabular';
 import { diffWithTodayInDays } from '../date/date';
 import { Link } from 'react-router-dom';
-
-const birthDate = new Date("1993-10-12")
-const days = diffWithTodayInDays(birthDate)
-const you = {
-  id: "you",
-  title: "You",
-  days: days,
-  image: "http://www.accountingweb.co.uk/sites/all/modules/custom/sm_pp_user_profile/img/default-user.png",
-  categories: [],
-  link: "/settings",
-}
+import {connect} from 'react-redux';
+import {fillDatabase} from '../actions/database';
 
 const PersonDescription = (props) => (
   <div>
@@ -44,21 +35,19 @@ class HomeContent extends Component{
 
   constructor(props) {
     super(props);
-    // Don't call this.setState() here!
     this.state = { people: [] };
   }
 
   componentDidMount() {
-    getAllDatabase().then(res => this.setState({people: [you, ...res]}))
+    getAllDatabase().then(res => this.props.dispatch(fillDatabase(res)))
   }
 
   render() {
     return (
       <div>
-        <h2>{days} days</h2>
         <List
           itemLayout="horizontal"
-          dataSource={this.state.people}
+          dataSource={this.props.database}
           renderItem={item => <ListItem {...item}/>}
         />
       </div>
@@ -66,4 +55,22 @@ class HomeContent extends Component{
   }
 }
 
-export const Home = addTabs(HomeContent, "home");
+const buildYou = age => ({
+  id: "you",
+  title: "You",
+  days: age,
+  image: "http://www.accountingweb.co.uk/sites/all/modules/custom/sm_pp_user_profile/img/default-user.png",
+  categories: [],
+  link: "/settings",
+})
+
+const mapStateToProps = (state) => {
+  const age = diffWithTodayInDays(state.user.birth)
+  const database = state.database.length > 0 ? [buildYou(age), ...state.database] : []
+  return {
+    database,
+    age,
+  }
+}
+
+export const Home = addTabs(connect(mapStateToProps)(HomeContent), "home");

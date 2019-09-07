@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Avatar, Icon, PageHeader, Skeleton } from 'antd';
-import { getFromId } from '../api/query';
+import {connect} from 'react-redux';
 
 
 function pad(num) {
@@ -12,43 +12,39 @@ const formatDate = (date) => {
   return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}`
 }
 
-export class Description extends Component{
+const DescriptionContent = (props) => (
+  <div style={{minHeight: "100vh", backgroundColor:"#282c34"}}>
+    <PageHeader
+      style={{
+        backgroundColor: "black",
+        color: "white",
+        paddingTop: "1em",
+        paddingBottom: "1em",
+      }}
+      title={props.description && <div style={{color: "white"}}>{props.description.title}</div>}
+      subTitle={props.description && <div style={{color: "white"}}>{`${props.description.days} days`}</div>}
+      onBack={() => props.history.goBack()}
+      backIcon={<Icon style={{color: "white"}} type="arrow-left" />}
+      />
+      {
+        props.description
+        ? <div style={{backgroundColor:"#282c34", color:"white"}}>
+          <Avatar size={128} src={props.description.image} />
+          <p>Birth : {formatDate(props.description.birthDate)}</p>
+          <p>Death : {formatDate(props.description.deathDate)}</p>
+          {props.description.description && <p>{props.description.description}</p>}
+        </div>
+        : <Skeleton/>
+      }
+  </div>
+)
 
-  constructor(props) {
-    super(props);
-    this.state = {  };
-  }
-
-  componentDidMount() {
-    getFromId(this.props.match.params.id).then(res => this.setState({description: res[0]}))
-  }
-
-  render() {
-    return (
-      <div style={{minHeight: "100vh", backgroundColor:"#282c34"}}>
-        <PageHeader
-          style={{
-            backgroundColor: "black",
-            color: "white",
-            paddingTop: "1em",
-            paddingBottom: "1em",
-          }}
-          title={this.state.description && <div style={{color: "white"}}>{this.state.description.title}</div>}
-          subTitle={this.state.description && <div style={{color: "white"}}>{`${this.state.description.days} days`}</div>}
-          onBack={() => this.props.history.goBack()}
-          backIcon={<Icon style={{color: "white"}} type="arrow-left" />}
-          />
-          {
-            this.state.description
-            ? <div style={{backgroundColor:"#282c34", color:"white"}}>
-              <Avatar size={128} src={this.state.description.image} />
-              <p>Birth : {formatDate(this.state.description.birthDate)}</p>
-              <p>Death : {formatDate(this.state.description.deathDate)}</p>
-              {this.state.description.description && <p>{this.state.description.description}</p>}
-            </div>
-            : <Skeleton/>
-          }
-      </div>
-    )
-  }
+const mapStateToProps = (state, ownProps) => {
+  const description = state.database.filter(p => p.id === ownProps.match.params.id)[0]
+  console.log("description", description)
+  console.log(state.database)
+  console.log(ownProps)
+  return {description}
 }
+
+export const Description = connect(mapStateToProps)(DescriptionContent);
