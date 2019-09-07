@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
-import { Mobile, Desktop } from '../responsive/Responsive';
+import { Desktop } from '../responsive/Responsive';
 
 const Tab = (props) => (
   <div>
