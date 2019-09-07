@@ -3,9 +3,42 @@ import {  Avatar, List, Tag } from 'antd';
 import {getAllDatabase} from '../api/query';
 import { addTabs } from './Tabular';
 import { diffWithTodayInDays } from '../date/date';
+import { Link } from 'react-router-dom';
 
 const birthDate = new Date("1993-10-12")
 const days = diffWithTodayInDays(birthDate)
+const you = {
+  id: "you",
+  title: "You",
+  days: days,
+  image: "http://www.accountingweb.co.uk/sites/all/modules/custom/sm_pp_user_profile/img/default-user.png",
+  categories: [],
+  link: "/settings",
+}
+
+const PersonDescription = (props) => (
+  <div>
+    <div style={{color: "white"}}>{props.days} days</div>
+    <div>
+      {props.categories.map(cat => <Tag key={cat} color="purple">{cat}</Tag> )}
+    </div>
+  </div>
+)
+
+const ListItem = (props) => (
+  <List.Item key={props.id}>
+    <Link 
+      style={{width: '100%'}}
+      state={props}
+      to={props.id === "you" ? 'settings' : `description/${props.id}`}>
+      <List.Item.Meta
+        avatar={<Avatar size={64} src={props.image} />}
+        style={{width: '100%'}}
+        title={<a style={{color: "white"}} href={props.link}>{props.title}</a>}
+        description={<PersonDescription {...props}/>}/>
+    </Link>
+  </List.Item>
+)
 
 class HomeContent extends Component{
 
@@ -16,7 +49,7 @@ class HomeContent extends Component{
   }
 
   componentDidMount() {
-    getAllDatabase().then(res => this.setState({people: res}))
+    getAllDatabase().then(res => this.setState({people: [you, ...res]}))
   }
 
   render() {
@@ -26,22 +59,7 @@ class HomeContent extends Component{
         <List
           itemLayout="horizontal"
           dataSource={this.state.people}
-          renderItem={item => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={<Avatar size={64} src={item.image} />}
-                title={<a href={item.link}>{item.title}</a>}
-                description={
-                  <div>
-                    <div>{item.days} days</div>
-                    <div>
-                      {item.categories.map(cat => <Tag color="purple">{cat}</Tag> )}
-                    </div>
-                  </div>
-                }
-              />
-            </List.Item>
-          )}
+          renderItem={item => <ListItem {...item}/>}
         />
       </div>
     )

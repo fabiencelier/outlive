@@ -36,3 +36,8 @@ export const getAllDatabase = async () => {
     })
   })
 }
+
+export const getFromId  = async (id) => {
+  const allData = await getAllDatabase()
+  return allData.filter(p => p.id === id)
+}

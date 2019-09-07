@@ -12,7 +12,7 @@ export default (props) => (
       <Route path="/" exact component={Home} />
       <Route path="/statistics" component={Statistics} />
       <Route path="/settings" component={Settings} />
-      <Route path="/description" component={Description} />
+      <Route path="/description/:id" component={Description} />
     </div>
   </Router>
 );

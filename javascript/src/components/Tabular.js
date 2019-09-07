@@ -7,7 +7,7 @@ export const addTabs = (WrappedComponent) => {
   return () => (
     <div className="App">
       <div className="App-header">
-        <div  class="flex-container">
+        <div style={{zIndex: 10}}  className="flex-container">
           <div>
             <Link className="Header-link" to="/"><Icon type="home" /> Home</Link>
           </div>
