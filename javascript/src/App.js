@@ -4,7 +4,7 @@ import './App.css';
 import { Home } from './components/Home';
 import { Settings } from './components/settings/Settings';
 import { Statistics } from './components/Statistics';
-import { Description } from './components/Description';
+import { Description } from './components/description/Description';
 
 export default (props) => (
   <Router>

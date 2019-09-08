@@ -11,3 +11,12 @@ export const dateDiffInDays = (a, b) => {
 }
 
 export const diffWithTodayInDays = (date) => dateDiffInDays(date, new Date())
+
+function pad(num) {
+  var s = "00" + num;
+  return s.substr(s.length - 2);
+}
+
+export const formatDate = (date) => {
+  return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}`
+}
