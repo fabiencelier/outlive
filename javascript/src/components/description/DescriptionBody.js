@@ -30,17 +30,17 @@ const textStyle = {
 const Image = (props) => (
   <div>
     <Desktop>
-      <img src={props.image} style={{maxHeight: "500px"}} />
+      <img src={props.image} style={{maxHeight: "500px"}} alt={props.alt} />
     </Desktop>
     <Mobile>
-    <img src={props.image} style={{maxHeight: "200px"}} />
+    <img src={props.image} style={{maxHeight: "200px"}} alt={props.alt} />
     </Mobile>
   </div>
 )
 
 const TopDescription = (props) => (
   <div style={innerStyle}>
-    <Image image={props.image}  />
+    <Image image={props.image} alt={props.title} />
     <h2 style={{color: "white"}}>{props.title}</h2>
     <h3 style={{color: "white"}}>{props.days} days</h3>
     <p>Birth : {formatDate(props.birthDate)}<br/>

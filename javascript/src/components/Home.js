@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Avatar, List, Tag } from 'antd';
+import { Avatar, List } from 'antd';
 import {getAllDatabase} from '../api/query';
 import { addTabs } from './Tabular';
 import { diffWithTodayInDays } from '../date/date';
