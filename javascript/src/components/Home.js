@@ -6,13 +6,12 @@ import { diffWithTodayInDays } from '../date/date';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {fillDatabase} from '../actions/database';
+import {TagList} from './util/TagList';
 
 const PersonDescription = (props) => (
   <div>
     <div style={{color: "white"}}>{props.days} days</div>
-    <div>
-      {props.categories.map(cat => <Tag key={cat} color="purple">{cat}</Tag> )}
-    </div>
+    <TagList categories={props.categories} />
   </div>
 )
 

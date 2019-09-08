@@ -7,7 +7,7 @@ import {DescriptionHeader} from './DescriptionHeader';
 const DescriptionContent = (props) => (
   <div style={{minHeight: "100vh", backgroundColor:"#282c34"}}>
       <DescriptionHeader {...props}/>
-      { props.description ? <DescriptionBody {...props} /> : <Skeleton/>}
+      { props.description ? <DescriptionBody {...props.description} /> : <Skeleton/>}
   </div>
 )
 
