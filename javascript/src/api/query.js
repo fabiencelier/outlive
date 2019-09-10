@@ -18,13 +18,13 @@ const parseResult = (row) => ({
   categories: row[10].split(","),
   exactDates: row[11] === "TRUE",
   nationality: row[12] ? row[12].split(","): [],
-  manner_of_death: row[13],
-  cause_of_death: row[14],
-  imdb_id: row[15],
+  mannerOfDeath: row[13],
+  causeOfDeath: row[14],
+  imdbId: row[15],
   gender: row[16],
   occupations: row[17] ? row[17].split(",") : [],
-  deezer_id: row[18],
-  spotify_id: row[19],
+  deezerId: row[18],
+  spotifyId: row[19],
 })
 
 const url=`https://sheets.googleapis.com/v4/spreadsheets/${request.spreadsheetId}/values/${request.range}?key=${request.key}`

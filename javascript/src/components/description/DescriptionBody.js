@@ -2,6 +2,7 @@ import React from 'react';
 import {formatDate} from '../../date/date';
 import {TagList} from '../util/TagList';
 import {Desktop, Mobile} from '../../responsive/Responsive';
+import {Avatar} from 'antd';
 
 const outterStyle = {
   display: "flex",
@@ -22,7 +23,6 @@ const innerStyle = {
 const textStyle = {
   textAlign: "justify",
   textJustify: "inter-word",
-  textIndent: "40px",
   marginLeft: "15px",
   marginRight: "15px",
 };
@@ -36,6 +36,12 @@ const Image = (props) => (
     <img src={props.image} style={{maxHeight: "200px"}} alt={props.alt} />
     </Mobile>
   </div>
+);
+
+const getCause = (manner, cause) =>(
+  manner
+  ? cause ? `${manner} (${cause})` : manner
+  : cause ? cause : "Unknown"
 )
 
 const TopDescription = (props) => (
@@ -45,13 +51,37 @@ const TopDescription = (props) => (
     <h3 style={{color: "white"}}>{props.days} days</h3>
     <p>Birth : {formatDate(props.birthDate)}<br/>
     Death : {formatDate(props.deathDate)}<br/>
-    Cause : {props.description.cause ? props.cause : "Unknown"}</p>
+    Cause : {getCause(props.mannerOfDeath, props.causeOfDeath)}</p>
   </div>
 );
 
-const get_deezer_link = (id) => `https://www.deezer.com/fr/artist/${id}`;
+const get_deezer_link = (id) => `https://www.deezer.com/us/artist/${id}`;
 
-const get_imdb_link = (id) => `https://www.imdb.com/name/${id}`
+const get_imdb_link = (id) => `https://www.imdb.com/name/${id}`;
+
+const WikipediaLink = ({link}) => (
+  <div style={{marginLeft: "20px", marginRight: "20px"}}>
+    <a href={link}>
+      <Avatar shape="square" size={64} src="/img/wikipedia-1024.png" />
+    </a>
+  </div>
+)
+
+const DeezerLink = ({id}) => (
+  <div style={{marginLeft: "20px", marginRight: "20px"}}>
+    <a href={get_deezer_link(id)}>
+      <Avatar shape="square" size={64} src="/img/deezer-1024.png" />
+    </a>
+  </div>
+);
+
+const ImdbLink = ({id}) => (
+  <div style={{marginLeft: "20px", marginRight: "20px"}}>
+    <a href={get_imdb_link(id)}>
+      <Avatar shape="square" size={64} src="/img/imdb-1024.png" />
+    </a>
+  </div>
+);
 
 export const DescriptionBody = (props) => (
   <div style={outterStyle}>
@@ -62,10 +92,11 @@ export const DescriptionBody = (props) => (
       </div>
       <TagList categories={props.categories} />
       <br/>
-      <p><a href={props.link}>Wikipedia Page</a></p>
-      { props.deezer_id && <p><a href={get_deezer_link(props.deezer_id)}>Deezer</a></p>}
-      { props.imdb_id && <p><a href={get_imdb_link(props.imdb_id)}>IMDB</a></p>}
-
+      <div style={{display: "flex", alignItems:"space-around", marginTop: "20px"}}>
+        <WikipediaLink link={props.link}/>
+        { props.deezerId && <DeezerLink id={props.deezerId}/>}
+        { props.imdbId && <ImdbLink id={props.imdbId}/>}
+      </div>
     </div>
   </div>
 )
