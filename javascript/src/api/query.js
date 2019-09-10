@@ -1,6 +1,6 @@
 const request = {
   spreadsheetId: '1tLcsXib4I6wYr9EJED5uJj_mMfvDwI8hBJ7-dJWnTMk',
-  range: 'database!A1:M',
+  range: 'database!A1:T',
   key: "AIzaSyChFa8ete627UC3U9Wlgwffij0QeRdmthc",
 };
 
@@ -17,7 +17,14 @@ const parseResult = (row) => ({
   link: row[9],
   categories: row[10].split(","),
   exactDates: row[11] === "TRUE",
-  nationality: row[12].split(",")
+  nationality: row[12] ? row[12].split(","): [],
+  manner_of_death: row[13],
+  cause_of_death: row[14],
+  imdb_id: row[15],
+  gender: row[16],
+  occupations: row[17] ? row[17].split(",") : [],
+  deezer_id: row[18],
+  spotify_id: row[19],
 })
 
 const url=`https://sheets.googleapis.com/v4/spreadsheets/${request.spreadsheetId}/values/${request.range}?key=${request.key}`

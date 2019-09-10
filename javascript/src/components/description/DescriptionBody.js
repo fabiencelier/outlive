@@ -49,6 +49,10 @@ const TopDescription = (props) => (
   </div>
 );
 
+const get_deezer_link = (id) => `https://www.deezer.com/fr/artist/${id}`;
+
+const get_imdb_link = (id) => `https://www.imdb.com/name/${id}`
+
 export const DescriptionBody = (props) => (
   <div style={outterStyle}>
     <TopDescription {...props}/>
@@ -57,7 +61,11 @@ export const DescriptionBody = (props) => (
         {props.description && <p>{props.description}</p>}
       </div>
       <TagList categories={props.categories} />
-      <p><br/><a href={props.link}>Wikipedia Page</a></p>
+      <br/>
+      <p><a href={props.link}>Wikipedia Page</a></p>
+      { props.deezer_id && <p><a href={get_deezer_link(props.deezer_id)}>Deezer</a></p>}
+      { props.imdb_id && <p><a href={get_imdb_link(props.imdb_id)}>IMDB</a></p>}
+
     </div>
   </div>
 )
