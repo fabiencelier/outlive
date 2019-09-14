@@ -26,7 +26,7 @@ const ListItem = (props) => (
       <List.Item.Meta
         avatar={<Avatar size={64} src={props.image} />}
         style={{width: '100%'}}
-        title={<a style={{color: "white"}} href={props.link}>{props.title}</a>}
+        title={<span style={{color: "white"}}>{props.title}</span>}
         description={<PersonDescription {...props}/>}/>
     </Link>
   </List.Item>
