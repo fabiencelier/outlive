@@ -1,7 +1,8 @@
 export const defaultUserState = {
   categories: ["Famous"],
   birth: new Date("1993-10-12"),
-  notifPref: "never"
+  notifPref: "never",
+  orderPref: "outlived",
 }
 
 export default (state = defaultUserState, action) => {
@@ -26,6 +27,11 @@ export default (state = defaultUserState, action) => {
         ...state,
         notifPref: action.pref,
       };
+    case 'SET_ORDER_PREF':
+      return {
+        ...state,
+        orderPref: action.pref,
+      }
     default:
       return state;
   }

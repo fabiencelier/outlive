@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Avatar, List } from 'antd';
+import { Avatar, List, Radio } from 'antd';
 import {getAllDatabase} from '../api/query';
 import { addTabs } from './Tabular';
 import { diffWithTodayInDays } from '../date/date';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {fillDatabase} from '../actions/database';
+import {setOrderPreference} from '../actions/user';
 import {TagList} from './util/TagList';
+import {databaseSelecter} from '../selecters/databaseSelecter';
 
 const PersonDescription = (props) => (
   <div>
@@ -30,6 +32,19 @@ const ListItem = (props) => (
   </List.Item>
 )
 
+const OrderPicker = (props) => (
+  <div>
+      <Radio.Group
+        value={props.order}
+        buttonStyle="solid"
+        onChange={e => props.dispatch(setOrderPreference(e.target.value))}
+      >
+        <Radio.Button value="outlived">Oulived</Radio.Button>
+        <Radio.Button value="next">Next</Radio.Button>
+      </Radio.Group>
+    </div>
+);
+
 class HomeContent extends Component{
 
   constructor(props) {
@@ -43,31 +58,25 @@ class HomeContent extends Component{
 
   render() {
     return (
-      <List
-        itemLayout="horizontal"
-        dataSource={this.props.database}
-        renderItem={item => <ListItem {...item}/>}
-        style={{paddingTop: "100px"}}
-      />
+      <div style={{paddingTop: "100px"}}>
+        <h2 style={{color: "white"}}>{this.props.age} days</h2>
+        <OrderPicker {...this.props} />
+        <List
+          itemLayout="horizontal"
+          dataSource={this.props.database}
+          renderItem={item => <ListItem {...item}/>}
+        />
+      </div>
     )
   }
 }
 
-const buildYou = age => ({
-  id: "you",
-  title: "You",
-  days: age,
-  image: "http://www.accountingweb.co.uk/sites/all/modules/custom/sm_pp_user_profile/img/default-user.png",
-  categories: [],
-  link: "/settings",
-})
-
 const mapStateToProps = (state) => {
   const age = diffWithTodayInDays(state.user.birth)
-  const database = state.database.length > 0 ? [buildYou(age), ...state.database] : []
   return {
-    database,
+    database: databaseSelecter(state.database, age, state.user.orderPref === "outlived"),
     age,
+    order: state.user.orderPref
   }
 }
 

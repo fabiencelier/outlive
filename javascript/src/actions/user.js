@@ -13,8 +13,12 @@ export const removeCatagory = (category) => ({
   category,
 });
 
-
 export const setNotifPreferences = (pref) => ({
   type: 'SET_NOTIF_PREF',
   pref,
 });
+
+export const setOrderPreference = (pref) => ({
+  type : 'SET_ORDER_PREF',
+  pref
+})
