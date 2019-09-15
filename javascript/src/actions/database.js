@@ -1,4 +1,4 @@
-export const fillDatabase = (data) => ({
-  type: 'FILL_DATABASE',
+export const fillDatabase = data => ({
+  type: "FILL_DATABASE",
   data
 });

@@ -1,12 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import './App.css';
-import { Home } from './components/Home';
-import { Settings } from './components/settings/Settings';
-import { Statistics } from './components/Statistics';
-import { Description } from './components/description/Description';
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import "./App.css";
+import { Home } from "./components/Home";
+import { Settings } from "./components/settings/Settings";
+import { Statistics } from "./components/Statistics";
+import { Description } from "./components/description/Description";
 
-export default (props) => (
+export default props => (
   <Router>
     <div>
       <Route path="/" exact component={Home} />
