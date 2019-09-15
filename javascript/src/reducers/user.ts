@@ -1,33 +1,46 @@
-export const defaultUserState = {
+import {
+  ADD_CATEGORY,
+  REMOVE_CATEGORY,
+  SET_BIRTH_DATE,
+  SET_NOTIF_PREF,
+  SET_ORDER_PREF,
+  UserActionTypes
+} from "../actions/userTypes";
+import { UserState } from "../store/userStoreTypes";
+
+export const defaultUserState: UserState = {
   categories: ["Famous"],
   birth: new Date("1993-10-12"),
   notifPref: "never",
   orderPref: "outlived"
 };
 
-export default (state = defaultUserState, action) => {
+export default (
+  state: UserState = defaultUserState,
+  action: UserActionTypes
+): UserState => {
   switch (action.type) {
-    case "SET_BIRTH_DATE":
+    case SET_BIRTH_DATE:
       return {
         ...state,
         birth: action.date
       };
-    case "ADD_CATEGORY":
+    case ADD_CATEGORY:
       return {
         ...state,
         categories: [...state.categories, action.category]
       };
-    case "REMOVE_CATEGORY":
+    case REMOVE_CATEGORY:
       return {
         ...state,
-        categories: state.categories.filter(cat => cat === action.ategory)
+        categories: state.categories.filter(cat => cat === action.category)
       };
-    case "SET_NOTIF_PREF":
+    case SET_NOTIF_PREF:
       return {
         ...state,
         notifPref: action.pref
       };
-    case "SET_ORDER_PREF":
+    case SET_ORDER_PREF:
       return {
         ...state,
         orderPref: action.pref

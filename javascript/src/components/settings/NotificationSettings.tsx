@@ -1,8 +1,11 @@
 import React from "react";
 import { Button, Radio } from "antd";
 import { setNotifPreferences } from "../../actions/user";
+import { Dispatch } from "redux";
+import { UserState } from "../../store/userStoreTypes";
+import { diffWithTodayInDays } from "../../date/date";
 
-const showNotification = age => {
+const showNotification = (age: number) => {
   console.log("Checking for notif");
   Notification.requestPermission(result => {
     if (result === "granted") {
@@ -19,7 +22,7 @@ const showNotification = age => {
   });
 };
 
-const suscribeToNotif = age => {
+const suscribeToNotif = (age: number) => {
   Notification.requestPermission().then(function(result) {
     if (result === "granted") {
       showNotification(age);
@@ -27,19 +30,23 @@ const suscribeToNotif = age => {
   });
 };
 
-const setPref = (value, dispatch) => {
-  console.log(value);
-  dispatch(setNotifPreferences(value.target.value));
+const setPref = (value: string, dispatch: Dispatch) => {
+  dispatch(setNotifPreferences(value));
 };
 
-export const NotificationSettings = props => (
+export const NotificationSettings = (props: {
+  user: UserState;
+  dispatch: Dispatch;
+}) => (
   <div>
     <h2 className="theme">Notifications Mode</h2>
-    <Button onClick={() => suscribeToNotif(props.user.age)}>
+    <Button
+      onClick={() => suscribeToNotif(diffWithTodayInDays(props.user.birth))}
+    >
       Allow notification
     </Button>
     <Radio.Group
-      onChange={value => setPref(value, props.dispatch)}
+      onChange={e => setPref(e.target.value, props.dispatch)}
       value={props.user.notifPref}
     >
       <Radio value={"outlive"}>When I outlive</Radio>

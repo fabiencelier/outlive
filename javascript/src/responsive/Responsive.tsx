@@ -1,12 +1,12 @@
 import React from "react";
 import MediaQuery from "react-responsive";
 
-export const Desktop = ({ children }) => (
-  <MediaQuery query="(min-device-width: 1224px)">{children}</MediaQuery>
+export const Desktop = (props: { children: JSX.Element | string }) => (
+  <MediaQuery query="(min-device-width: 1224px)">{props.children}</MediaQuery>
 );
 
-export const Mobile = ({ children }) => (
+export const Mobile = (props: { children: JSX.Element | string }) => (
   <MediaQuery className="mobile" query="(max-device-width: 1224px)">
-    {children}
+    {props.children}
   </MediaQuery>
 );

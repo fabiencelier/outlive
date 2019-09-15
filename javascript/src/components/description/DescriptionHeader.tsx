@@ -1,7 +1,12 @@
 import React from "react";
 import { Icon, PageHeader } from "antd";
+import { Person } from "../../api/person";
+import { History } from "history";
 
-export const DescriptionHeader = props => (
+export const DescriptionHeader = (props: {
+  description: Person;
+  history: History;
+}) => (
   <PageHeader
     style={{
       backgroundColor: "black",

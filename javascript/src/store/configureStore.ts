@@ -1,5 +1,13 @@
 import { createStore, combineReducers } from "redux";
 import databaseReducer, { defaultDatabaseState } from "../reducers/database";
+import {
+  deserializeDatabaseState,
+  SerializedDatabaseState
+} from "../store/databaseStoreTypes";
+import {
+  SerializedUserState,
+  deserializeUserState
+} from "../store/userStoreTypes";
 import userReducer, { defaultUserState } from "../reducers/user";
 
 const getDefaultState = () => ({
@@ -7,35 +15,33 @@ const getDefaultState = () => ({
   database: defaultDatabaseState
 });
 
+const deserializeState = (state: {
+  database: SerializedDatabaseState;
+  user: SerializedUserState;
+}): AppState => ({
+  user: deserializeUserState(state.user),
+  database: deserializeDatabaseState(state.database)
+});
+
 const getPersistedState = () => {
-  const persistedState = localStorage.getItem("reduxState")
-    ? JSON.parse(localStorage.getItem("reduxState"))
+  const storedState = localStorage.getItem("reduxState");
+  const persistedState = storedState
+    ? deserializeState(JSON.parse(storedState))
     : getDefaultState();
-  if (persistedState.database) {
-    persistedState.database = persistedState.database.map(obj => ({
-      ...obj,
-      birthDate: new Date(obj.birthDate),
-      deathDate: new Date(obj.deathDate)
-    }));
-  }
-  if (persistedState.user) {
-    persistedState.user.birth = new Date(persistedState.user.birth);
-  }
   return persistedState;
 };
 
-export default () => {
-  const store = createStore(
-    combineReducers({
-      database: databaseReducer,
-      user: userReducer
-    }),
-    getPersistedState()
-  );
+const rootReducer = combineReducers({
+  database: databaseReducer,
+  user: userReducer
+});
 
+export default () => {
+  const store = createStore(rootReducer, getPersistedState());
   store.subscribe(() => {
     localStorage.setItem("reduxState", JSON.stringify(store.getState()));
   });
-
   return store;
 };
+
+export type AppState = ReturnType<typeof rootReducer>;

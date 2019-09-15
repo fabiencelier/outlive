@@ -2,7 +2,7 @@
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
-export const dateDiffInDays = (a, b) => {
+export const dateDiffInDays = (a: Date, b: Date): number => {
   // Discard the time and time-zone information.
   const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
   const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
@@ -10,14 +10,15 @@ export const dateDiffInDays = (a, b) => {
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 };
 
-export const diffWithTodayInDays = date => dateDiffInDays(date, new Date());
+export const diffWithTodayInDays = (date: Date): number =>
+  dateDiffInDays(date, new Date());
 
-function pad(num) {
+function pad(num: number): string {
   var s = "00" + num;
   return s.substr(s.length - 2);
 }
 
-export const formatDate = date => {
+export const formatDate = (date: Date) => {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
     date.getDate()
   )}`;

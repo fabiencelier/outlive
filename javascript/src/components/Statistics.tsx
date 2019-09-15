@@ -3,8 +3,9 @@ import { Statistic } from "antd";
 import { addTabs } from "./Tabular";
 import { diffWithTodayInDays } from "../date/date";
 import { connect } from "react-redux";
+import { AppState } from "../store/configureStore";
 
-const StatisticsContent = props => (
+const StatisticsContent = (props: { age: number }) => (
   <div>
     <h1 style={{ color: "white" }}>Statistics</h1>
     <h3 style={{ color: "white" }}>Survival Time</h3>
@@ -15,7 +16,7 @@ const StatisticsContent = props => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: AppState) => ({
   age: diffWithTodayInDays(state.user.birth)
 });
 

@@ -1,9 +1,14 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "antd";
 import { Desktop } from "../responsive/Responsive";
 
-const Tab = props => (
+const Tab = (props: {
+  active: boolean;
+  path: string;
+  icon: string;
+  text: string;
+}) => (
   <div>
     <Link
       className="Header-link"
@@ -15,7 +20,7 @@ const Tab = props => (
   </div>
 );
 
-export const addTabs = (WrappedComponent, active) => {
+export const addTabs = (WrappedComponent: ComponentType, active: string) => {
   return () => (
     <div className="App">
       <div className="App-header">

@@ -1,6 +1,8 @@
 import React from "react";
 import { Checkbox } from "antd";
 import { addCatagory, removeCatagory } from "../../actions/user";
+import { UserState } from "../../store/userStoreTypes";
+import { Dispatch } from "redux";
 
 const categories = [
   "Famous",
@@ -12,13 +14,20 @@ const categories = [
   "Sport"
 ];
 
-const updateCategory = (checked, category, dispatch) => {
+const updateCategory = (
+  checked: boolean,
+  category: string,
+  dispatch: Dispatch
+) => {
   checked
     ? dispatch(addCatagory(category))
     : dispatch(removeCatagory(category));
 };
 
-export const CategorySettings = props => (
+export const CategorySettings = (props: {
+  user: UserState;
+  dispatch: Dispatch;
+}) => (
   <div>
     <h2 className="theme">Categories</h2>
     <div style={{ width: "100%" }}>

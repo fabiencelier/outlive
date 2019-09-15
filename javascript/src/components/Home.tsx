@@ -9,19 +9,29 @@ import { fillDatabase } from "../actions/database";
 import { setOrderPreference } from "../actions/user";
 import { TagList } from "./util/TagList";
 import { databaseSelecter } from "../selecters/databaseSelecter";
+import { AppState } from "../store/configureStore";
+import { Dispatch } from "redux";
+import { DatabaseStore } from "../store/databaseStoreTypes";
+import { Person } from "../api/person";
 
-const PersonDescription = props => (
+interface HomeProps {
+  database: DatabaseStore;
+  age: number;
+  order: string;
+  dispatch: Dispatch;
+}
+
+const PersonDescription = (props: Person) => (
   <div>
     <div style={{ color: "white" }}>{props.days} days</div>
     <TagList categories={props.categories} />
   </div>
 );
 
-const ListItem = props => (
+const ListItem = (props: Person) => (
   <List.Item key={props.id}>
     <Link
       style={{ width: "100%" }}
-      state={props}
       to={props.id === "you" ? "settings" : `description/${props.id}`}
     >
       <List.Item.Meta
@@ -45,7 +55,7 @@ const ListItem = props => (
   </List.Item>
 );
 
-const OrderPicker = props => (
+const OrderPicker = (props: HomeProps) => (
   <div>
     <Radio.Group
       value={props.order}
@@ -58,14 +68,14 @@ const OrderPicker = props => (
   </div>
 );
 
-class HomeContent extends Component {
-  constructor(props) {
+class HomeContent extends Component<HomeProps> {
+  constructor(props: HomeProps) {
     super(props);
     this.state = { people: [] };
   }
 
   componentDidMount() {
-    getAllDatabase().then(res => this.props.dispatch(fillDatabase(res)));
+    getAllDatabase().then(res => res && this.props.dispatch(fillDatabase(res)));
   }
 
   render() {
@@ -83,7 +93,7 @@ class HomeContent extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: AppState) => {
   const age = diffWithTodayInDays(state.user.birth);
   return {
     database: databaseSelecter(

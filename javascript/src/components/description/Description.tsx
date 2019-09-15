@@ -3,8 +3,14 @@ import { Skeleton } from "antd";
 import { connect } from "react-redux";
 import { DescriptionBody } from "./DescriptionBody";
 import { DescriptionHeader } from "./DescriptionHeader";
+import { AppState } from "../../store/configureStore";
+import { History } from "history";
+import { Person } from "../../api/person";
 
-const DescriptionContent = props => (
+const DescriptionContent = (props: {
+  description: Person;
+  history: History;
+}) => (
   <div style={{ minHeight: "100vh", backgroundColor: "#282c34" }}>
     <DescriptionHeader {...props} />
     {props.description ? (
@@ -15,7 +21,10 @@ const DescriptionContent = props => (
   </div>
 );
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (
+  state: AppState,
+  ownProps: { match: { params: { id: string } } }
+) => {
   const description = state.database.filter(
     p => p.id === ownProps.match.params.id
   )[0];
