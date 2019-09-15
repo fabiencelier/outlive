@@ -1,6 +1,6 @@
 export interface UserState {
   categories: string[];
-  birth: Date;
+  birth?: Date;
   notifPref: string;
   orderPref: string;
 }

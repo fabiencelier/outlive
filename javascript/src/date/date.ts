@@ -10,8 +10,8 @@ export const dateDiffInDays = (a: Date, b: Date): number => {
   return Math.floor((utc2 - utc1) / _MS_PER_DAY);
 };
 
-export const diffWithTodayInDays = (date: Date): number =>
-  dateDiffInDays(date, new Date());
+export const diffWithTodayInDays = (date: Date | undefined): number =>
+  date ? dateDiffInDays(date, new Date()) : 0;
 
 function pad(num: number): string {
   var s = "00" + num;

@@ -20,7 +20,7 @@ const mapStateToProps = (state: AppState) => ({
   age: diffWithTodayInDays(state.user.birth)
 });
 
-export const Statistics = addTabs(
-  connect(mapStateToProps)(StatisticsContent),
-  "statistics"
-);
+export const Statistics = addTabs({
+  WrappedComponent: connect(mapStateToProps)(StatisticsContent),
+  active: "statistics"
+});

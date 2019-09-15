@@ -10,7 +10,6 @@ import { UserState } from "../store/userStoreTypes";
 
 export const defaultUserState: UserState = {
   categories: ["Famous"],
-  birth: new Date("1993-10-12"),
   notifPref: "never",
   orderPref: "outlived"
 };

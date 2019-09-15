@@ -2,6 +2,10 @@ import React, { ComponentType } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "antd";
 import { Desktop } from "../responsive/Responsive";
+import { WelcomeHome } from "./welcome/WelcomeHome";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { AppState } from "../store/configureStore";
 
 const Tab = (props: {
   active: boolean;
@@ -20,27 +24,56 @@ const Tab = (props: {
   </div>
 );
 
-export const addTabs = (WrappedComponent: ComponentType, active: string) => {
-  return () => (
-    <div className="App">
-      <div className="App-header">
-        <div style={{ zIndex: 10 }} className="flex-container">
-          <Tab path="/" icon="home" text="Home" active={active === "home"} />
-          <Tab
-            path="/statistics"
-            icon="bar-chart"
-            text="Statistics"
-            active={active === "statistics"}
-          />
-          <Tab
-            path="/settings"
-            icon="setting"
-            text="Settings"
-            active={active === "settings"}
-          />
+interface HocArguments {
+  WrappedComponent: ComponentType;
+  active: string;
+}
+
+const innerAddTabs = (args: HocArguments) => {
+  return (props: { isNew: boolean; dispatch: Dispatch }) => {
+    if (props.isNew) {
+      return (
+        <div className="App">
+          <div className="App-header">
+            <WelcomeHome dispatch={props.dispatch} />
+          </div>
         </div>
-        <WrappedComponent />
-      </div>
-    </div>
-  );
+      );
+    } else {
+      return (
+        <div className="App">
+          <div className="App-header">
+            <div style={{ zIndex: 10 }} className="flex-container">
+              <Tab
+                path="/"
+                icon="home"
+                text="Home"
+                active={args.active === "home"}
+              />
+              <Tab
+                path="/statistics"
+                icon="bar-chart"
+                text="Statistics"
+                active={args.active === "statistics"}
+              />
+              <Tab
+                path="/settings"
+                icon="setting"
+                text="Settings"
+                active={args.active === "settings"}
+              />
+            </div>
+            <args.WrappedComponent />
+          </div>
+        </div>
+      );
+    }
+  };
 };
+
+const mapStateToProps = (state: AppState) => ({
+  isNew: state.user.birth ? false : true
+});
+
+export const addTabs = (args: HocArguments) =>
+  connect(mapStateToProps)(innerAddTabs(args));

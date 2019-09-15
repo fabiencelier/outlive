@@ -24,7 +24,7 @@ const mapStateToProps = (state: AppState) => ({
   user: state.user
 });
 
-export const Settings = addTabs(
-  connect(mapStateToProps)(SettingsContent),
-  "settings"
-);
+export const Settings = addTabs({
+  WrappedComponent: connect(mapStateToProps)(SettingsContent),
+  active: "settings"
+});
