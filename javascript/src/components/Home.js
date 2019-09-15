@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Avatar, List, Radio } from "antd";
+import { List, Radio } from "antd";
 import { getAllDatabase } from "../api/query";
 import { addTabs } from "./Tabular";
 import { diffWithTodayInDays } from "../date/date";
@@ -25,7 +25,18 @@ const ListItem = props => (
       to={props.id === "you" ? "settings" : `description/${props.id}`}
     >
       <List.Item.Meta
-        avatar={<Avatar size={64} src={props.image} />}
+        avatar={
+          <img
+            src={props.image}
+            style={{
+              width: 64,
+              height: 64,
+              objectFit: "cover",
+              borderRadius: "10px"
+            }}
+            alt={props.title}
+          />
+        }
         style={{ width: "100%" }}
         title={<span style={{ color: "white" }}>{props.title}</span>}
         description={<PersonDescription {...props} />}
