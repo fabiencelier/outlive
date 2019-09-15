@@ -133,34 +133,3 @@ export function unregister() {
     });
   }
 }
-
-function showNotification() {
-  console.log("checking for notif");
-  Notification.requestPermission(function(result) {
-    if (result === "granted") {
-      console.log("notif Allowed");
-      navigator.serviceWorker.ready.then(function(registration) {
-        console.log("Notif !");
-        registration.showNotification("Vibration Sample", {
-          body: "Buzz! Buzz! 2",
-          icon: "../images/touch/chrome-touch-icon-192x192.png",
-          vibrate: [200, 100, 200, 100, 200, 100, 200],
-          tag: "vibration-sample"
-        });
-      });
-    }
-  });
-}
-
-// if (Notification.permission == 'granted'){
-showNotification();
-// }
-
-// var button = document.getElementById("notifications");
-// button.addEventListener('click', function(e) {
-//     Notification.requestPermission().then(function(result) {
-//         if(result === 'granted') {
-//             randomNotification();
-//         }
-//     });
-// });
