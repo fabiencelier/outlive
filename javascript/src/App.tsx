@@ -6,7 +6,7 @@ import { Settings } from "./components/settings/Settings";
 import { Statistics } from "./components/Statistics";
 import { Description } from "./components/description/Description";
 
-export default props => (
+export default () => (
   <Router>
     <div>
       <Route path="/" exact component={Home} />

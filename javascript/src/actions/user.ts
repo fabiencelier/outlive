@@ -3,12 +3,12 @@ export const setBirthDate = date => ({
   date
 });
 
-export const addCatagory = category => ({
+export const addCatagory = (category: string) => ({
   type: "ADD_CATEGORY",
   category
 });
 
-export const removeCatagory = category => ({
+export const removeCatagory = (category: string) => ({
   type: "REMOVE_CATEGORY",
   category
 });
