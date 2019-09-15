@@ -68,7 +68,9 @@ def get_json_for_ids(ids: List[str]):
 
 def extract_id(json_content, prop: str) -> str:
   if prop in json_content["claims"]:
-    return json_content["claims"][prop][0]["mainsnak"]["datavalue"]["value"]["id"]
+    data = json_content["claims"][prop][0]["mainsnak"]
+    if "datavalue" in data:
+      return data["datavalue"]["value"]["id"]
   return None
 
 def get_label(json_content, prop: str) -> str:
