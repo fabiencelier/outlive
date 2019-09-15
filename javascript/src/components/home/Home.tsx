@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { List } from "antd";
 import { getAllDatabase } from "../../api/query";
 import { addTabs } from "../Tabular";
 import { diffWithTodayInDays } from "../../date/date";
@@ -9,36 +8,26 @@ import { databaseSelecter } from "../../selecters/databaseSelecter";
 import { AppState } from "../../store/configureStore";
 import { Dispatch } from "redux";
 import { DatabaseStore } from "../../store/databaseStoreTypes";
-import { ListItem } from "./HomeItemList";
 import { OrderPicker } from "./OrderPicker";
+import { InfiniteList } from "./InfiniteList";
 
 export interface HomeProps {
   database: DatabaseStore;
   age: number;
   order: string;
-  isNew: boolean;
   dispatch: Dispatch;
 }
 
 class HomeContent extends Component<HomeProps> {
-  constructor(props: HomeProps) {
-    super(props);
-    this.state = { people: [] };
-  }
-
   componentDidMount() {
     getAllDatabase().then(res => res && this.props.dispatch(fillDatabase(res)));
   }
 
   render = () => (
-    <div style={{ paddingTop: "100px" }}>
+    <div style={{ width: "100%", paddingTop: "100px", maxWidth: "400px" }}>
       <h2 style={{ color: "white" }}>{this.props.age} days</h2>
       <OrderPicker {...this.props} />
-      <List
-        itemLayout="horizontal"
-        dataSource={this.props.database}
-        renderItem={item => <ListItem {...item} />}
-      />
+      <InfiniteList people={this.props.database} />
     </div>
   );
 }
@@ -52,8 +41,7 @@ const mapStateToProps = (state: AppState) => {
       state.user.orderPref === "outlived"
     ),
     age,
-    order: state.user.orderPref,
-    isNew: state.user.birth ? false : true
+    order: state.user.orderPref
   };
 };
 

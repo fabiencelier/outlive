@@ -25,7 +25,8 @@ export const ListItem = (props: Person) => (
               width: 64,
               height: 64,
               objectFit: "cover",
-              borderRadius: "10px"
+              borderRadius: "10px",
+              marginLeft: "15px"
             }}
             alt={props.title}
           />
