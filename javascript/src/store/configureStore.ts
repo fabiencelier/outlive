@@ -28,9 +28,6 @@ const getPersistedState = () => {
   const persistedState = storedState
     ? deserializeState(JSON.parse(storedState))
     : getDefaultState();
-  if (persistedState.user.time === undefined) {
-    persistedState.user.time = [0, 0, 0];
-  }
   return persistedState;
 };
 
