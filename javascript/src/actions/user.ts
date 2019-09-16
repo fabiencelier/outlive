@@ -1,5 +1,6 @@
 import {
   SET_BIRTH_DATE,
+  SET_BIRTH_TIME,
   ADD_CATEGORY,
   REMOVE_CATEGORY,
   SET_NOTIF_PREF,
@@ -10,6 +11,13 @@ import {
 export const setBirthDate = (date: Date): UserActionTypes => ({
   type: SET_BIRTH_DATE,
   date
+});
+
+export const setBirthTime = (
+  time: [number, number, number]
+): UserActionTypes => ({
+  type: SET_BIRTH_TIME,
+  time
 });
 
 export const addCatagory = (category: string): UserActionTypes => ({

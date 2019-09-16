@@ -4,12 +4,14 @@ import {
   SET_BIRTH_DATE,
   SET_NOTIF_PREF,
   SET_ORDER_PREF,
-  UserActionTypes
+  UserActionTypes,
+  SET_BIRTH_TIME
 } from "../actions/userTypes";
 import { UserState } from "../store/userStoreTypes";
 
 export const defaultUserState: UserState = {
   categories: ["Famous"],
+  time: [0, 0, 0],
   notifPref: "never",
   orderPref: "outlived"
 };
@@ -23,6 +25,11 @@ export default (
       return {
         ...state,
         birth: action.date
+      };
+    case SET_BIRTH_TIME:
+      return {
+        ...state,
+        time: action.time
       };
     case ADD_CATEGORY:
       return {

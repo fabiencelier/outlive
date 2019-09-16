@@ -3,10 +3,16 @@ export const ADD_CATEGORY = "ADD_CATEGORY";
 export const REMOVE_CATEGORY = "REMOVE_CATEGORY";
 export const SET_NOTIF_PREF = "SET_NOTIF_PREF";
 export const SET_ORDER_PREF = "SET_ORDER_PREF";
+export const SET_BIRTH_TIME = "SET_BIRTH_TIME";
 
 interface SetBirthDateAction {
   type: typeof SET_BIRTH_DATE;
   date: Date;
+}
+
+interface SetBirthTimeAction {
+  type: typeof SET_BIRTH_TIME;
+  time: [number, number, number];
 }
 
 interface AddCategoryAction {
@@ -34,4 +40,5 @@ export type UserActionTypes =
   | AddCategoryAction
   | RemoveCategoryAction
   | SetNotifPrefAction
-  | SetOrderPrefAction;
+  | SetOrderPrefAction
+  | SetBirthTimeAction;
