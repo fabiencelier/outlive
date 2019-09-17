@@ -10,6 +10,26 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
+import * as firebase from "firebase/app";
+import "firebase/messaging";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBbJMQG6PCUfD_kyHni6cZNQ1aDsKY51Hw",
+  authDomain: "outlive.firebaseapp.com",
+  databaseURL: "https://outlive.firebaseio.com",
+  projectId: "outlive",
+  storageBucket: "",
+  messagingSenderId: "734287808356",
+  appId: "1:734287808356:web:2a543963f82dfd202c9c71"
+};
+
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+// Add the public key generated from the console here.
+
+messaging.getToken().then(tok => localStorage.setItem("notif-token", tok));
+messaging.onMessage(payload => console.log("message", payload));
+
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
     // [::1] is the IPv6 localhost address.
