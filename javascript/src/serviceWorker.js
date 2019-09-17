@@ -10,6 +10,17 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("../firebase-messaging-sw.js")
+    .then(function(registration) {
+      console.log("Registration successful, scope is:", registration.scope);
+    })
+    .catch(function(err) {
+      console.log("Service worker registration failed, error:", err);
+    });
+}
+
 import * as firebase from "firebase/app";
 import "firebase/messaging";
 
@@ -32,6 +43,13 @@ messaging.usePublicVapidKey(
 
 messaging.getToken().then(tok => localStorage.setItem("notif-token", tok));
 messaging.onMessage(payload => console.log("message", payload));
+messaging.setBackgroundMessageHandler(payload => {
+  const title = payload.data.title;
+  const options = {
+    body: payload.data.score
+  };
+  return self.registration.showNotification(title, options);
+});
 
 console.log(messaging);
 
