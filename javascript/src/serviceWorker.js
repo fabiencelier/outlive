@@ -26,6 +26,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 // Add the public key generated from the console here.
+messaging.usePublicVapidKey(
+  "BHaxJ58YCs9VFQYjPPo0KzeXAeAVpCXNhbhymeblFTand362yWEmpnRWqjCXfCg01vSEL1twic4_d-6rz7YdN28"
+);
 
 messaging.getToken().then(tok => localStorage.setItem("notif-token", tok));
 messaging.onMessage(payload => console.log("message", payload));
