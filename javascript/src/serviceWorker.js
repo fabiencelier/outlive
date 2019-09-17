@@ -33,6 +33,8 @@ messaging.usePublicVapidKey(
 messaging.getToken().then(tok => localStorage.setItem("notif-token", tok));
 messaging.onMessage(payload => console.log("message", payload));
 
+console.log(messaging);
+
 const isLocalhost = Boolean(
   window.location.hostname === "localhost" ||
     // [::1] is the IPv6 localhost address.
