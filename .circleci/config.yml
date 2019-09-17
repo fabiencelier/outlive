@@ -20,7 +20,7 @@ jobs:
             - javascript/node_modules
           key: v1-dependencies-{{ checksum "javascript/package.json" }}
       - run: cd javascript && yarn run prettier --check "src/**/*.js"
-      - run: cd javascript && yarn test
+      # - run: cd javascript && yarn test
       - run: cd javascript && yarn build
       - run: mkdir deploy
       - deploy:
