@@ -9,6 +9,7 @@ import {
   deserializeUserState
 } from "../store/userStoreTypes";
 import userReducer, { defaultUserState } from "../reducers/user";
+import { sendBirthToWorker } from "../worker/send";
 
 const getDefaultState = () => ({
   user: defaultUserState,
@@ -40,6 +41,10 @@ export default () => {
   const store = createStore(rootReducer, getPersistedState());
   store.subscribe(() => {
     localStorage.setItem("reduxState", JSON.stringify(store.getState()));
+  });
+  store.subscribe(() => {
+    const birth = store.getState().user.birth;
+    birth && sendBirthToWorker(birth);
   });
   return store;
 };

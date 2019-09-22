@@ -4,7 +4,7 @@ import { setNotifPreferences } from "../../actions/user";
 import { Dispatch } from "redux";
 import { UserState } from "../../store/userStoreTypes";
 import { diffWithTodayInDays } from "../../date/date";
-import { showNotification, isNotificationAllowed } from "../../notif/notif";
+import { showNotification, isNotificationAllowed } from "../../worker/notif";
 
 interface NotifSettingsProps {
   user: UserState;

@@ -5,12 +5,12 @@ import { Home } from "./components/home/Home";
 import { Settings } from "./components/settings/Settings";
 import { Statistics } from "./components/Statistics";
 import { Description } from "./components/description/Description";
-import { isNotificationAllowed } from "./notif/notif";
+import { isNotificationAllowed } from "./worker/notif";
 import {
   registerToNotif,
   initFirebaseApp,
   sendTokenToServer
-} from "./init-fcm";
+} from "./worker/init-fcm";
 
 class App extends React.Component {
   componentDidMount() {

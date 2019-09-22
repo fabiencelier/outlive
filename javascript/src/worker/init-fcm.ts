@@ -1,6 +1,6 @@
 import * as firebase from "firebase/app";
 import "firebase/messaging";
-import { showNotification } from "./notif/notif";
+import { showNotification } from "./notif";
 
 export const initFirebaseApp = (): firebase.messaging.Messaging | null => {
   const initializedFirebaseApp = firebase.initializeApp({

@@ -5,7 +5,11 @@ const topic = "test";
 
 exports.handler = async event => {
   const token = JSON.parse(event.body).token;
-  const response = {};
+  const response = {
+    headers: {
+      "Access-Control-Allow-Origin": "*"
+    }
+  };
   if (!token) {
     console.log("No token");
     response.statusCode = 400;
@@ -17,10 +21,12 @@ exports.handler = async event => {
 
   const registrationTokens = [token];
 
-  admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-    databaseURL: "https://outlive.firebaseio.com"
-  });
+  if (!admin.apps.length) {
+    admin.initializeApp({
+      credential: admin.credential.applicationDefault(),
+      databaseURL: "https://outlive.firebaseio.com"
+    });
+  }
 
   // Subscribe the devices corresponding to the registration tokens to the
   // topic.
