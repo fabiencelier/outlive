@@ -4,30 +4,7 @@ import { setNotifPreferences } from "../../actions/user";
 import { Dispatch } from "redux";
 import { UserState } from "../../store/userStoreTypes";
 import { diffWithTodayInDays } from "../../date/date";
-
-const showNotification = (age: number) => {
-  console.log("Checking for notif");
-  Notification.requestPermission(result => {
-    if (result === "granted") {
-      console.log("Notif Allowed");
-      if (!navigator.serviceWorker) {
-        return;
-      }
-      navigator.serviceWorker.ready.then(registration => {
-        console.log("Notif !");
-        registration.showNotification(`${age} days !`, {
-          body: "Congratulations ! Keep living !",
-          icon: "logo192.png",
-          vibrate: [200, 100]
-        });
-      });
-    }
-  });
-};
-
-const isNotificationAllowed = () => {
-  return Notification.permission === "granted";
-};
+import { showNotification, isNotificationAllowed } from "../../notif/notif";
 
 interface NotifSettingsProps {
   user: UserState;
@@ -50,7 +27,11 @@ export class NotificationSettings extends React.Component<
     Notification.requestPermission().then(function(result) {
       component.setState({ notifAllowed: result === "granted" });
       if (result === "granted") {
-        showNotification(age);
+        showNotification({
+          title: `${age} days`,
+          body: "Congratulations, keep living !",
+          icon: "logo192.png"
+        });
       }
     });
   };

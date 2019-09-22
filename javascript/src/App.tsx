@@ -5,23 +5,22 @@ import { Home } from "./components/home/Home";
 import { Settings } from "./components/settings/Settings";
 import { Statistics } from "./components/Statistics";
 import { Description } from "./components/description/Description";
-
-import { messaging } from "./init-fcm";
+import { isNotificationAllowed } from "./notif/notif";
+import {
+  registerToNotif,
+  initFirebaseApp,
+  sendTokenToServer
+} from "./init-fcm";
 
 class App extends React.Component {
   componentDidMount() {
-    messaging
-      .requestPermission()
-      .then(async function() {
-        const token = await messaging.getToken();
-        console.log("Token in app: ", token);
-      })
-      .catch(function(err) {
-        console.log("Unable to get permission to notify.", err);
-      });
-    navigator.serviceWorker.addEventListener("message", message =>
-      console.log(message)
-    );
+    if (isNotificationAllowed) {
+      const messaging = initFirebaseApp();
+      if (messaging != null) {
+        registerToNotif(messaging);
+        sendTokenToServer(messaging);
+      }
+    }
   }
 
   render = () => (
