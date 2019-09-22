@@ -5,11 +5,11 @@ export const isNotificationAllowed = () => {
 export const showNotification = ({
   title,
   body,
-  icon
+  icon = "logo192.png"
 }: {
   title: string;
   body: string;
-  icon: string;
+  icon?: string;
 }) => {
   if (isNotificationAllowed()) {
     console.log("Notif Allowed");

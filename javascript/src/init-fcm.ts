@@ -1,5 +1,6 @@
 import * as firebase from "firebase/app";
 import "firebase/messaging";
+import { showNotification } from "./notif/notif";
 
 export const initFirebaseApp = (): firebase.messaging.Messaging | null => {
   const initializedFirebaseApp = firebase.initializeApp({
@@ -30,13 +31,35 @@ export const registerToNotif = async (
         ? console.log("Firebase token", token)
         : console.log("No firebase token")
     );
-  navigator.serviceWorker.addEventListener("message", message =>
-    console.log(message)
-  );
+  navigator.serviceWorker.addEventListener("message", message => {
+    console.log(message);
+    showNotification({ title: "You are X days old", body: "Congratulations" });
+  });
 };
+
+const register_url =
+  "https://s3p4ucp4be.execute-api.us-west-2.amazonaws.com/default/register-notif";
 
 export const sendTokenToServer = async (
   messaging: firebase.messaging.Messaging
 ) => {
-  messaging.getToken().then(token => {});
+  messaging.getToken().then(token =>
+    fetch(register_url, {
+      method: "post",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ token: token })
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(result => {
+        console.log("Succesfull", result);
+      })
+      .catch(error => {
+        console.log("Request failed", error);
+      })
+  );
 };
